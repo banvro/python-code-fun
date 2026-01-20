@@ -8,7 +8,7 @@ my_ai = genai.Client(api_key = api_key)
 
 responce = my_ai.models.generate_content(
     model = "gemini-3-flash-preview",
-    contents = prompt
+    contents = "why python is important to learn in 2026."
 )
 
 print(responce.text)
