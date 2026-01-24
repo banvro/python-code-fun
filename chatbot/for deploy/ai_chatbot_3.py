@@ -1,8 +1,8 @@
 from google import genai
-import streamlit as st
+import streamlit as st 
 
 def query(user_query):
-    api_key = "AIzaSyBC038g5sDMrkznWWAbcfn0sbI0euanHJ4"
+    api_key = "AIzaSyDURgxh3lnxCQMtPMle_g0pbzK_oq3uv1Q"
     my_ai = genai.Client(api_key = api_key)
 
     responce = my_ai.models.generate_content(
@@ -12,7 +12,7 @@ def query(user_query):
     return responce.text
 
 st.title("🧠Personal AI Chat")
-
+ 
 if 'message' not in st.session_state:
     st.session_state.message = []
 
