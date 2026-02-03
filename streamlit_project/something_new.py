@@ -1,8 +1,10 @@
-import streamlit as st, time
 
-st.title("⚽ Animation")
+import streamlit as st 
+from streamlit_image_comparison import image_comparison
 
-box = st.empty()
-for i in list(range(10))+list(range(10,0,-1)):
-    box.write("⬛"*i + "⚽" + "⬛"*(10-i))
-    time.sleep(0.1)
+st.title("Image Comparsion")
+
+image_comparison(
+    img1 = 'x.jpg',
+    img2 =  'y.jpg'
+)
