@@ -34,3 +34,6 @@ if uploaded_file:
                 file_name="no_bg.png",
                 mime="image/png"
             )
+
+
+

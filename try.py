@@ -1,37 +1,39 @@
-import streamlit as st
-import yt_dlp, os
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
-st.title("🎵 YouTube Audio Downloader & Player (MP3)")
 
-# Input URL
-url = st.text_input("Enter YouTube URL:")
+class MyApp(App):
+    def build(self):
+        layout = BoxLayout(orientation="vertical", padding=20, spacing=15)
 
-if url:
-    st.info("⏳ Downloading audio... Please wait.")
+        self.lbl = Label(text="Enter your comment:", font_size=22)
 
-    try:
-        # Create downloads folder if it doesn't exist
-        save_folder = "downloads"
-        os.makedirs(save_folder, exist_ok=True)
+        self.txt = TextInput(
+            hint_text="Type something...",
+            font_size=20,
+            size_hint=(1, 0.3)
+        )
 
-        ydl_opts = {
-            "quiet": True,
-            "no_warnings": True,
-            "format": "bestaudio/best",
-            "outtmpl": f"{save_folder}/%(title)s.%(ext)s",
-            "postprocessors": [{
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "192",
-            }]
-        }
+        btn = Button(
+            text="Submit",
+            font_size=22,
+            size_hint=(1, 0.2)
+        )
+        btn.bind(on_press=self.submit_text)
 
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=True)
-            file_path = os.path.splitext(ydl.prepare_filename(info))[0] + ".mp3"
+        layout.add_widget(self.lbl)
+        layout.add_widget(self.txt)
+        layout.add_widget(btn)
 
-        st.success(f"✅ Audio Downloaded! Saved in {file_path}")
-        st.audio(file_path)  # Play MP3 directly
+        return layout
 
-    except Exception as e:
-        st.error(f"❌ Download failed: {e}")
+    def submit_text(self, instance):
+        user_text = self.txt.text
+        self.lbl.text = f"You typed: {user_text}"
+
+
+if __name__ == "__main__":
+    MyApp().run()
